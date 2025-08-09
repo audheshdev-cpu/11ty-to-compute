@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Love Partner Checker 💘</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: crimson;
+      font-size: 40px;
+      margin-top: 30px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 18px;
+      margin: 10px;
+      width: 250px;
+      border-radius: 10px;
+      border: 2px solid #fff;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background: hotpink;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 24px;
+      color: darkmagenta;
+      font-weight: bold;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      transform: rotate(45deg);
+      animation: fall 5s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -10%;
+        opacity: 1;
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+      }
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💘 Love Partner Checker 2.0 💘</h1>
+
+  <input type="text" id="yourName" placeholder="Tumhara naam">
+  <br>
+  <input type="text" id="partnerName" placeholder="Uska naam">
+  <br>
+  <button onclick="checkLove()">Check Love %</button>
+  <button onclick="resetGame()">🔁 Reset</button>
+  <button onclick="toggleMusic()">🎵 Music On/Off</button>
+  <br>
+  <div id="result"></div>
+  <br>
+  <button onclick="shareWhatsApp()">📲 Share on WhatsApp</button>
+
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    function checkLove() {
+      const yourName = document.getElementById("yourName").value.trim();
+      const partnerName = document.getElementById("partnerName").value.trim();
+      const result = document.getElementById("result");
+
+      if (yourName === "" || partnerName === "") {
+        result.innerHTML = "😅 Dono naam likho bhai!";
+        return;
+      }
+
+      const lovePercent = Math.floor(Math.random() * 101);
+      const messages = [
+        "Tum dono ke beech ek alag hi rishta hai! 💖",
+        "Love level high! 😍 Ek dusre ke liye bane ho!",
+        "Kabhi na kabhi miloge zaroor 💌",
+        "Thoda kam hai... lekin pyaar ho sakta hai! 🌸",
+        "Love story to likhi gayi hai tum dono ke naam se! 📖"
+      ];
+
+      const loveMsg = messages[Math.floor(Math.random() * messages.length)];
+
+      result.innerHTML = `
+        ${yourName} ❤️ ${partnerName} <br>
+        Match: <b>${lovePercent}%</b> <br>
+        ${loveMsg}
+      `;
+
+      createHearts();
+    }
+
+    function resetGame() {
+      document.getElementById("yourName").value = "";
+      document.getElementById("partnerName").value = "";
+      document.getElementById("result").innerHTML = "";
+    }
+
+    function createHearts() {
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+      }
+    }
+
+    function toggleMusic() {
+      const music = document.getElementById("bgMusic");
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
+
+    function shareWhatsApp() {
+      const yourName = document.getElementById("yourName").value.trim();
+      const partnerName = document.getElementById("partnerName").value.trim();
+      if (yourName === "" || partnerName === "") {
+        alert("Dono naam likho pehle!");
+        return;
+      }
+      const text = `❤️ Love Test Result ❤️\n${yourName} ❤️ ${partnerName}\nCheck your match at: [Apni website ka link daalo yahan]`;
+      const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
+    }
+  </script>
+
+</body>
+</html>
